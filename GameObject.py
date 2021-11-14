@@ -32,8 +32,7 @@ class GameObject():
             self.velocity.normalize()
             self.velocity *= self.maxSpeed
             speed = self.maxSpeed
-        # If we're walking, don't worry about friction.
-        # Otherwise, use friction to slow us down.
+       
         if not self.walking:
             frictionVal = FRICTION*dt
             if frictionVal > speed:
@@ -72,10 +71,10 @@ class Player(GameObject):
     def __init__(self):
         GameObject.__init__(self,
                             Vec3(0, 0, 0),
-                            "samplemodels2/act_p3d_chan",
+                            "",
                             {
-                                "walk" : "samplemodels2/a_p3d_chan_run",
-                                "stand" : "samplemodels2/a_p3d_chan_idle"
+                                "walk" : "",
+                                "stand" : ""
                             },
                             5,
                             10,
