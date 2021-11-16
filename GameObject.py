@@ -119,3 +119,77 @@ class Player(GameObject):
 
 # end player class
 
+class WalkingEnemy(Enemy):
+    def __init__(self, pos):
+        Enemy.__init__(self, pos,
+                       "samplemodels/SimpleEnemy/simpleEnemy",
+                       {
+                           "stand" : "samplemodels/SimpleEnemy/simpleEnemy-stand",
+                           "walk" : "samplemodels/SimpleEnemy/simpleEnemy-walk",
+                           "attack" : "samplemodels/SimpleEnemy/simpleEnemy-attack",
+                           "die" : "samplemodels/SimpleEnemy/simpleEnemy-die",
+                           "spawn" : "samplemodels/SimpleEnemy/simpleEnemy-spawn"
+                       },
+                       3.0,
+                       7.0,
+                       "walkingEnemy")
+
+        self.attackDistance = 0.75
+
+        self.acceleration = 100.0
+
+        # A reference vector, used to determine
+        # which way to face the Actor.
+        # Since the character faces along
+        # the y-direction, we use the y-axis.
+        self.yVector = Vec2(0,1)
+
+    def runLogic(self, player, dt):
+        # find the vector between this enemy and the player. If the enemy is far from the player, use vector to move towards the player. Otherwise, just stop for now. Finally, face the player.
+        vectorToPlayer = player.actor.getPos() - self.actor.getPos()
+
+        vectorToPlayer2D = vectorToPlayer.getXy()
+        distanceToPlayer = vectorToPlayer2D.length()
+
+        vectorToPlayer2D.normalize()
+
+        heading = self.yVector.signedAngleDeg(vectorToPlayer2D)
+
+        if distanceToPlayer > self.attackDistance*0.9:
+            self.walking = True
+            vectorToPlayer.setZ(0)
+            vectorToPlayer.normalize()
+            self.velocity += vectorToPlayer*self.acceleration*dt
+        else:
+            self.walking = False
+            self.velocity.set(0, 0, 0)
+
+        self.actor.setH(heading)
+
+#end walkingenemy class
+
+class TrapEnemy(Enemy):
+    def __init__(self, pos):
+        Enemy.__init__(self, pos,
+                       "samplemodels/SlidingTrap/trap",
+                       {
+                        "stand" : "samplemodels/SlidingTrap/trap-stand",
+                        "walk" : "samplemodels/SlidingTrap/trap-walk"
+                       },
+                       100.0,
+                       10.0,
+                       "trapEnemy")
+
+        base.pusher.addCollider(self.collider, self.actor)
+        base.cTrav.addCollider(self.collider, base.pusher)
+
+        self.moveInX = False
+        self.moveDirection = 0
+
+        # prevents multiple collisons with playuer during movement
+        self.ignorePlayer = False
+
+    def runLogic(self, player, dt):
+        if moveDirection != 0;
+        self.walking
+
